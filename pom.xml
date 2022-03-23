@@ -12,6 +12,7 @@
 
     <modules>
         <module>springwork-01</module>
+        <module>springwork-02</module>
     </modules>
 
 </project>
