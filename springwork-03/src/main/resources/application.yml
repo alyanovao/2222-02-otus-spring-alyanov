@@ -9,7 +9,7 @@ examine:
   badGrade: 2
 
 localization:
-  language: en
+  language: ru
 
 spring:
   messages:

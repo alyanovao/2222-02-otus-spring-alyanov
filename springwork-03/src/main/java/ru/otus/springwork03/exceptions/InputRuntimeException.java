@@ -2,7 +2,7 @@ package ru.otus.springwork03.exceptions;
 
 import java.io.IOException;
 
-public class InputRuntimeException extends RuntimeException {
+public class InputRuntimeException extends CustomRuntimeException {
     public InputRuntimeException() {
     }
 

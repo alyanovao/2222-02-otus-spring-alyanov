@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class Question {
@@ -17,16 +18,11 @@ public class Question {
         this.questionText = questionText;
 
         List<String> rightAnswerCopy = new ArrayList<>();
-        for (String answerElement : rightAnswer) {
-            rightAnswerCopy.add(answerElement);
-        }
-
+        rightAnswerCopy.addAll(rightAnswer);
         this.rightAnswer = rightAnswerCopy;
 
         List<String> mistakeAnswerCopy = new ArrayList<>();
-        for (String answerElement : mistakeAnswer) {
-            mistakeAnswerCopy.add(answerElement);
-        }
+        mistakeAnswerCopy.addAll(mistakeAnswer);
         this.mistakeAnswer = mistakeAnswerCopy;
     }
 

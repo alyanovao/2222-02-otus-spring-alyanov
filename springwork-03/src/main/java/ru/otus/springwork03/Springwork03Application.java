@@ -7,8 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 import ru.otus.springwork03.service.ExaminationService;
 
 @SpringBootApplication
-//@PropertySource(value = "classpath:i18n/messages_ru_RU.properties", encoding = "UTF-8")
-@PropertySource(value = "classpath:questions-ru.csv", encoding = "UTF-8")
 public class Springwork03Application {
 
     public static void main(String[] args) {
