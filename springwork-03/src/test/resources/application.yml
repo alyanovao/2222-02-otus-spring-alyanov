@@ -1,0 +1,17 @@
+file:
+  path:
+    russianLocate: questions-ru.csv
+    englishLocate: questions-en.csv
+examine:
+  excellentGrade: 5
+  goodGrade: 4
+  normalGrade: 3
+  badGrade: 2
+
+localization:
+  language: en
+
+spring:
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
