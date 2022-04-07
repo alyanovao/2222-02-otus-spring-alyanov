@@ -14,6 +14,7 @@
         <module>springwork-01</module>
         <module>springwork-02</module>
         <module>springwork-03</module>
+        <module>springwork-04</module>
     </modules>
 
 </project>
