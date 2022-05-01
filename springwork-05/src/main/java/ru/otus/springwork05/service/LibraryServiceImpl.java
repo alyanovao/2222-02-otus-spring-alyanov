@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.springwork05.dao.AuthorDao;
 import ru.otus.springwork05.dao.BookDao;
-import ru.otus.springwork05.dao.BookViewDao;
 import ru.otus.springwork05.dao.KindBookDao;
 import ru.otus.springwork05.model.Author;
 import ru.otus.springwork05.model.Book;
-import ru.otus.springwork05.model.BookView;
 import ru.otus.springwork05.model.KindBook;
 
 import java.util.List;
@@ -17,24 +15,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LibraryServiceImpl implements LibraryService {
 
-    private final BookViewDao bookViewDao;
     private final BookDao bookDao;
     private final AuthorDao authorDao;
     private final KindBookDao kindDao;
 
     @Override
-    public BookView getBookById(long id) {
-        return bookViewDao.getBookById(id);
+    public Book getBookById(long id) {
+        return bookDao.getById(id);
     }
 
     @Override
-    public BookView getBookByName(String name) {
-        return bookViewDao.getBookByName(name);
+    public Book getBookByName(String name) {
+        return bookDao.getByName(name);
     }
 
     @Override
-    public List<BookView> getBooks() {
-        return bookViewDao.getAllBooks();
+    public List<Book> getBooks() {
+        return bookDao.getAll();
     }
 
     @Override
@@ -63,6 +60,11 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
+    public Author getAuthorById(long id) {
+        return authorDao.getById(id);
+    }
+
+    @Override
     public long getEmptyAuthorId() {
         return authorDao.getEmptyId();
     }
@@ -84,6 +86,11 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public List<KindBook> getKindBooks() {
         return kindDao.getAll();
+    }
+
+    @Override
+    public KindBook getKindBookById(Long id) {
+        return kindDao.getById(id);
     }
 
     @Override

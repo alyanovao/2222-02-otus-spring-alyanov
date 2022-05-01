@@ -6,11 +6,12 @@ import org.springframework.shell.standard.ShellMethod;
 import ru.otus.springwork05.exception.BookNotFoundException;
 import ru.otus.springwork05.model.Author;
 import ru.otus.springwork05.model.Book;
-import ru.otus.springwork05.model.BookView;
 import ru.otus.springwork05.model.KindBook;
 import ru.otus.springwork05.processor.IOService;
 import ru.otus.springwork05.processor.PrintService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,10 +26,10 @@ public class AppServiceImpl implements AppService {
     @ShellMethod(value = "getBookById", key = {"id", "i"})
     public void getBookById() {
         long id = ioService.readLongWithPrompt("Введите id книги:");
-        BookView book;
+        Book book;
         try {
             book = library.getBookById(id);
-            printService.printBookView(book);
+            printService.printBook(book);
         }
         catch (BookNotFoundException e) {
             ioService.outputMessage("Указанная книга не найдена");
@@ -41,8 +42,8 @@ public class AppServiceImpl implements AppService {
         String name = ioService.readStringWithPrompt("Введите название книги:");
 
         try {
-            BookView book = library.getBookByName(name);
-            printService.printBookView(book);
+            Book book = library.getBookByName(name);
+            printService.printBook(book);
         }
         catch (BookNotFoundException e) {
             ioService.outputMessage("Указанная книга не найдена");
@@ -53,27 +54,37 @@ public class AppServiceImpl implements AppService {
     @ShellMethod(value = "getBooks", key = {"books", "b"})
     public void getBooks() {
         var books = library.getBooks();
-        printService.printBookView(books);
+        printService.printBook(books);
     }
 
     @Override
     @ShellMethod(value = "addBook", key = {"addbook", "ab"})
     public void addBook() {
-        var name = ioService.readStringWithPrompt("Введите название книги:");
-        var authorId = ioService.readLongWithPrompt("Введите идентификатор автора:");
-        var kindId = ioService.readLongWithPrompt("Введите идентификатор жанра:");
-        Book book = new Book(library.getEmptyBookId(), name, authorId, kindId);
+        Book book = getNewBook(library.getEmptyBookId());
         library.addBook(book);
     }
 
-    @Override
-    @ShellMethod(value = "updateBook", key = {"updateBook", "ub"})
-    public void updateBook() {
-        var id = ioService.readLongWithPrompt("Введите идентификатор редактируемой книги:");
+    private Book getNewBook(long id) {
         var name = ioService.readStringWithPrompt("Введите название книги:");
-        var authorId = ioService.readLongWithPrompt("Введите идентификатор автора:");
+        var authorId = ioService.readStringWithPrompt("Введите идентификаторы авторов через запятую:");
         var kindId = ioService.readLongWithPrompt("Введите идентификатор жанра:");
-        library.updateBook(new Book(id, name, authorId, kindId));
+        List<Author> authors = new ArrayList<>();
+        List<String> authorList = Arrays.asList(authorId.split(","));
+        for (int i = 0; i <= authorList.size() - 1; i++) {
+            Author author = library.getAuthorById(Long.parseLong(authorList.get(i)));
+            authors.add(author);
+        }
+        List<KindBook> kind = new ArrayList<>();
+        kind.add(library.getKindBookById(kindId));
+        return new Book(id, name, authors, kind);
+    }
+
+    @Override
+    @ShellMethod(value = "updateBook", key = {"updateBook", "u"})
+    public void updateBook() {
+        var bookId = ioService.readLongWithPrompt("Введите идентификатор книги:");
+        Book book = getNewBook(bookId);
+        library.updateBook(book);
     }
 
     @Override

@@ -1,14 +1,14 @@
 package ru.otus.springwork05.processor;
 
 import ru.otus.springwork05.model.Author;
-import ru.otus.springwork05.model.BookView;
+import ru.otus.springwork05.model.Book;
 import ru.otus.springwork05.model.KindBook;
 
 import java.util.List;
 
 public interface PrintService {
-    void printBookView(BookView bookView);
-    void printBookView(List<BookView> bookView);
+    void printBook(Book book);
+    void printBook(List<Book> bookView);
     void printAuthor(Author author);
     void printAuthor(List<Author> author);
 

@@ -3,10 +3,11 @@ package ru.otus.springwork05.processor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.otus.springwork05.model.Author;
-import ru.otus.springwork05.model.BookView;
+import ru.otus.springwork05.model.Book;
 import ru.otus.springwork05.model.KindBook;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -15,22 +16,26 @@ public class PrintServiceImpl implements PrintService {
     private final IOService service;
 
     @Override
-    public void printBookView(BookView bookView) {
-        print(bookView);
+    public void printBook(Book book) {
+        print(book);
     }
 
-    private void print(BookView bookView) {
-        service.outputMessage("Идентификатор: " + bookView.getId());
-        service.outputMessage("Название:" + bookView.getBookName());
-        service.outputMessage("Автор:" + bookView.getAuthorName());
-        service.outputMessage("Жанр:" + bookView.getKindBook());
+    private void print(Book book) {
+        service.outputMessage("Идентификатор: " + book.getId());
+        service.outputMessage("Название:" + book.getName());
+        service.outputMessage("Автор:" + book.getAuthors().stream().map(author -> {
+            return author.getFirstName() + " " + author.getLastName() + " " + author.getPartonymic();
+        }).collect(Collectors.joining(", ")));
+        service.outputMessage("Жанр:" + book.getKindBooks().stream().map(kindBook -> {
+            return kindBook.getName();
+        }).collect(Collectors.joining(", ")));
         service.outputMessage("");
     }
 
     @Override
-    public void printBookView(List<BookView> bookView) {
-        for(BookView book: bookView) {
-            print(book);
+    public void printBook(List<Book> book) {
+        for(Book element: book) {
+            print(element);
         }
     }
 

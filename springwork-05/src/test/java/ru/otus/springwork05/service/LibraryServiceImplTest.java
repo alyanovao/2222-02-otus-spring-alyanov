@@ -1,55 +1,79 @@
 package ru.otus.springwork05.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import ru.otus.springwork05.dao.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.otus.springwork05.dao.AuthorDao;
+import ru.otus.springwork05.dao.BookDao;
+import ru.otus.springwork05.dao.KindBookDao;
+import ru.otus.springwork05.model.Author;
 import ru.otus.springwork05.model.Book;
+import ru.otus.springwork05.model.KindBook;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-@JdbcTest
-@Import({LibraryServiceImpl.class, BookDaoJdbc.class, BookViewDaoImpl.class, KindBookDaoJdbc.class, AuthorDaoJdbc.class})
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
 class LibraryServiceImplTest {
 
-    @Autowired
-    private LibraryServiceImpl service;
+    public static final Author author_1 = new Author(1, "authorFirstName", "authorLastName", "authorPatronymic");
+    public static final KindBook kindBook_1 = new KindBook(1, "kindBook");
+    public static final Book book_1 = new Book(1,
+            "bookName",
+            new ArrayList<Author>(Arrays.asList(author_1)),
+            new ArrayList<KindBook>(Arrays.asList(kindBook_1)));
+
+    @Mock
+    private BookDao bookDao;
+
+    @Mock
+    private KindBookDao kindBookDao;
+
+    @Mock
+    private AuthorDao authorDao;
+
+    private LibraryService service;
+
+    @BeforeEach
+    void setUp() {
+        service = new LibraryServiceImpl(bookDao, authorDao, kindBookDao);
+    }
+
 
     @Test
     void getBookById() {
-        var book = service.getBookById(3);
-        assertThat(book.getBookName()).isEqualTo("Стальная крыса");
+        var book = service.getBookById(1);
+        verify(bookDao, times(1)).getById(1);
+        assertThatCode(() -> service.addBook(book_1)).doesNotThrowAnyException();
     }
 
     @Test
     void getBooks() {
-        assertThat(service.getBooks().size()).isEqualTo(3);
+        service.getBooks();
+        verify(bookDao, times(1)).getAll();
     }
 
     @Test
     void addBook() {
-        Book book = new Book(4, "Test", 3, 3);
-        service.addBook(book);
-        assertThat(service.getBookById(4).getBookName()).isEqualTo(book.getName());
+        service.addBook(book_1);
+        verify(bookDao, times(1)).insert(book_1);
     }
 
     @Test
     void updateBook() {
-        Book book = new Book(3, "Test", 3, 3);
-        service.updateBook(book);
-        assertThat(service.getBookById(3).getBookName()).isEqualTo(book.getName());
+        service.updateBook(book_1);
+        verify(bookDao, times(1)).update(book_1);
     }
 
     @Test
     void deleteBook() {
-        Book book = new Book(4, "Книга", 3, 3);
-        service.addBook(book);
-        service.deleteBook(3);
-        assertThat(service.getBooks().size()).isEqualTo(3);
-        assertThat(service.getBookById(4).getBookName()).isEqualTo(book.getName());
+        service.deleteBook(1);
+        verify(bookDao, times(1)).delete(1);
     }
 }
