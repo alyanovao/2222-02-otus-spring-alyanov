@@ -33,8 +33,10 @@ public class PrintServiceImpl implements PrintService {
         for (Examination examination : examinations) {
             List<String> list = Stream.concat(examination.getRightAnswer().stream(),
                     examination.getMistakeAnswer().stream()).collect(Collectors.toList());
+
             sb.append("id=").append(examination.getId()).append("\n")
             .append("question: ").append(examination.getQuestion()).append("\n");
+
             list.stream().forEach(c -> sb.append("answer: " + c).append("\n"));
         }
         System.out.println(sb.toString());

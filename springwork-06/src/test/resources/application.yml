@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:h2db
+  h2:
+    concole:
+      path: /h2-console
+  flyway:
+    enabled: true
