@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Import;
 import ru.otus.springwork06.model.Commentary;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import(CommentaryDaoImpl.class)
@@ -24,14 +23,14 @@ class CommentaryDaoImplTest {
 
     @Test
     void getAllByBookId() {
-        var comments = commentaryDao.getAllByBookId(3);
-        assertThat(comments.size()).isEqualTo(2);
+        var comments = commentaryDao.getById(2);
+        assertThat(comments.getId()).isEqualTo(2);
     }
 
     @Test
     void save() {
         commentaryDao.save(new Commentary(0, "Test", 3));
-        assertThat(commentaryDao.getAllByBookId(3).size()).isEqualTo(3);
+        assertThat(commentaryDao.getById(3).getId()).isEqualTo(3);
     }
 
     @Test
@@ -42,7 +41,10 @@ class CommentaryDaoImplTest {
 
     @Test
     void delete() {
-        commentaryDao.delete(1);
-        assertThat(commentaryDao.getAllByBookId(3).size()).isEqualTo(1);
+        var commentaryCount = commentaryDao.getAll();
+        var commentary = commentaryDao.getById(1);
+        commentaryDao.delete(commentary);
+        var commentaryAfterDelete = commentaryDao.getAll();
+        assertThat(commentaryCount.size()).isEqualTo(commentaryAfterDelete.size());
     }
 }

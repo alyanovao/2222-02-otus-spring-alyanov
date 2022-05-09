@@ -63,13 +63,11 @@ class BookDaoImplTest {
     }
 
     @Test
-    void deleteById() {
-        var author = new Author(5, "Исаак", "Азимов", "Юдович");
-        authorDao.save(author);
-        var kind = kindDao.findById(3).get();
-        var book = new Book(5, "Я, робот", new ArrayList<Author>(Arrays.asList(author)), new ArrayList<KindBook>(Arrays.asList(kind)), null);
-        dao.save(book);
-        dao.deleteById(3);
-        assertThat(dao.findAll().size()).isEqualTo(3);
+    void deleteBook() {
+        var bookKountBefore = dao.findAll().size();
+        var bookFromSource = dao.findById(3).get();
+        dao.deleteBook(bookFromSource);
+        var bookCount = dao.findAll().size();
+        assertThat(bookCount).isLessThan(bookKountBefore);
     }
 }

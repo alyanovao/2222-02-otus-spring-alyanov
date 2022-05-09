@@ -1,10 +1,10 @@
-package ru.otus.springwork06.dao;
+package ru.otus.springwork06.service;
 
 import ru.otus.springwork06.model.Commentary;
 
 import java.util.List;
 
-public interface CommentaryDao {
+public interface CommentaryService {
     Commentary getById(long id);
 
     List<Commentary> getAll();
@@ -13,5 +13,5 @@ public interface CommentaryDao {
 
     Commentary update(Commentary commentary);
 
-    void delete(Commentary commentary);
+    void delete(long id);
 }

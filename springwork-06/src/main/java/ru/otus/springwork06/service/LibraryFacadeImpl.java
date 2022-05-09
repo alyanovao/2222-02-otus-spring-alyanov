@@ -3,10 +3,6 @@ package ru.otus.springwork06.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.springwork06.dao.AuthorDao;
-import ru.otus.springwork06.dao.BookDao;
-import ru.otus.springwork06.dao.CommentaryDao;
-import ru.otus.springwork06.dao.KindBookDao;
 import ru.otus.springwork06.exception.AuthorNotFoundException;
 import ru.otus.springwork06.exception.BookNotFoundException;
 import ru.otus.springwork06.exception.KindBookNotFoundException;
@@ -19,107 +15,110 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class LibraryServiceImpl implements LibraryService {
+public class LibraryFacadeImpl implements LibraryFacade {
 
-    private final AuthorDao authorDao;
-    private final KindBookDao kindBookDao;
-    private final BookDao bookDao;
-    private final CommentaryDao commentaryDao;
+    private final AuthorService authorService;
+    private final KindBookService kindBookService;
+    private final BookService bookService;
+    private final CommentaryService commentaryService;
 
     @Override
-    @Transactional(readOnly = true)
     public Author getAuthorById(long id) {
-        var author =  authorDao.findById(id);
+        var author = authorService.findById(id);
         return author.orElseThrow(AuthorNotFoundException::new);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public List<Author> getAuthors() {
-        return authorDao.findAll();
+        return authorService.findAll();
     }
 
     @Override
     @Transactional
     public Author saveAuthor(Author author) {
-        return authorDao.save(author);
+        return authorService.save(author);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public KindBook getKindById(long id) {
-        return kindBookDao.findById(id).orElseThrow(KindBookNotFoundException::new);
+        return kindBookService.findById(id).orElseThrow(KindBookNotFoundException::new);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public List<KindBook> getKinds() {
-        return kindBookDao.findAll();
+        return kindBookService.findAll();
     }
 
     @Override
     @Transactional
     public KindBook saveKind(KindBook kind) {
-        return kindBookDao.save(kind);
+        return kindBookService.save(kind);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public Book getBookById(long id) {
-        return bookDao.findById(id).orElseThrow(BookNotFoundException::new);
+        return bookService.findById(id).orElseThrow(BookNotFoundException::new);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public List<Book> getBooks() {
-        return bookDao.findAll();
+        return bookService.findAll();
     }
 
     @Override
     @Transactional
     public Book saveBook(Book book) {
-        return bookDao.save(book);
+        return bookService.save(book);
     }
 
     @Override
     @Transactional
     public Book updateBook(Book book) {
-        return bookDao.merge(book);
+        return bookService.merge(book);
     }
 
     @Override
     @Transactional
-    public void deleteById(long id) {
-        bookDao.deleteById(id);
+    public void deleteBook(Book book) {
+        bookService.deleteBook(book);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public Commentary getCommentaryById(long id) {
-        return commentaryDao.getById(id);
+        return commentaryService.getById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Commentary> getCommentariesById(long id) {
-        return commentaryDao.getAllByBookId(id);
+    public List<Commentary> getBookCommentaries(long id) {
+        return bookService.findById(id).orElseThrow(BookNotFoundException::new).getCommentary();
+    }
+
+    @Override
+    public List<Commentary> getAllCommentaries() {
+        return commentaryService.getAll();
     }
 
     @Override
     @Transactional
     public Commentary saveCommentary(Commentary commentary) {
-        return commentaryDao.save(commentary);
+        return commentaryService.save(commentary);
     }
 
     @Override
     @Transactional
     public Commentary updateCommentary(Commentary commentary) {
-        return commentaryDao.update(commentary);
+        return commentaryService.update(commentary);
     }
 
     @Override
     @Transactional
     public void deleteCommentary(long id) {
-        commentaryDao.delete(id);
+        commentaryService.delete(id);
     }
 }

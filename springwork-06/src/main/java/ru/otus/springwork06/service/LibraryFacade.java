@@ -7,7 +7,8 @@ import ru.otus.springwork06.model.KindBook;
 
 import java.util.List;
 
-public interface LibraryService {
+//Попытка реализации SRP через патерн фассад
+public interface LibraryFacade {
     Author getAuthorById(long id);
 
     List<Author> getAuthors();
@@ -28,11 +29,13 @@ public interface LibraryService {
 
     Book updateBook(Book book);
 
-    void deleteById(long id);
+    void deleteBook(Book book);
 
     Commentary getCommentaryById(long id);
 
-    List<Commentary> getCommentariesById(long id);
+    List<Commentary> getBookCommentaries(long id);
+
+    List<Commentary> getAllCommentaries();
 
     Commentary saveCommentary(Commentary commentary);
 

@@ -1,6 +1,6 @@
 package ru.otus.springwork06.exception;
 
-public class KindBookNotFoundException extends LibraryException {
+public class KindBookNotFoundException extends ApplicationException {
 
     public KindBookNotFoundException() {
         super();

@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.springwork06.exception.BookNotFoundException;
+import ru.otus.springwork06.exception.ComponentException;
+import ru.otus.springwork06.exception.RepositoryException;
 import ru.otus.springwork06.model.Author;
 import ru.otus.springwork06.model.Book;
 import ru.otus.springwork06.model.Commentary;
@@ -17,9 +19,9 @@ import java.util.List;
 
 @ShellComponent
 @RequiredArgsConstructor
-public class AppServiceImpl implements AppService {
+public class ApplicationServiceImpl implements ApplicationService {
 
-    private final LibraryService library;
+    private final LibraryFacade library;
     private final PrintService printService;
     private final IOService ioService;
 
@@ -119,15 +121,22 @@ public class AppServiceImpl implements AppService {
     @ShellMethod(value = "deletebook", key = {"deletebook", "d"})
     public void deleteBook() {
         var id = ioService.readLongWithPrompt("Введите номер книги");
-        library.deleteById(id);
+        Book book = library.getBookById(id);
+        library.deleteBook(book);
     }
 
     @Override
     @ShellMethod(value = "getcommentarybyid", key = {"getcommentarybyid", "gc"})
     public void getCommentaryById() {
         var id = ioService.readLongWithPrompt("Введите номер книги:");
-        List<Commentary> commentary = library.getCommentariesById(id);
+        List<Commentary> commentary = library.getBookCommentaries(id);
         printService.printCommentaries(commentary);
+    }
+
+    @Override
+    @ShellMethod(value = "getsllcommentaries", key = {"getallcommentaries", "gcs"})
+    public void getAllCommentaries() {
+        printService.printCommentaries(library.getAllCommentaries());
     }
 
     @Override
@@ -135,8 +144,16 @@ public class AppServiceImpl implements AppService {
     public void saveCommentary() {
         var id = ioService.readLongWithPrompt("Введите номер книги:");
         var name = ioService.readStringWithPrompt("Введите текст комментария:");
-        Commentary commentary = new Commentary(0, name, library.getBookById(id).getId());
-        library.saveCommentary(commentary);
+        try {
+            Commentary commentary = new Commentary(0, name, library.getBookById(id).getId());
+            library.saveCommentary(commentary);
+        }
+        catch(ComponentException e) {
+            ioService.outputMessage("Не удалось сохранить комментарий");
+        }
+        catch(RepositoryException e) {
+            ioService.outputMessage("Не удалось сохранить комент");
+        }
     }
 
     @Override

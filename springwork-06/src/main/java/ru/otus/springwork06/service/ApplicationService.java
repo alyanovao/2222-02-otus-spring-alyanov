@@ -1,6 +1,6 @@
 package ru.otus.springwork06.service;
 
-public interface AppService {
+public interface ApplicationService {
     void getAuthors();
     void saveAuthor();
 
@@ -19,6 +19,8 @@ public interface AppService {
     void deleteBook();
 
     void getCommentaryById();
+
+    void getAllCommentaries();
 
     void saveCommentary();
 
