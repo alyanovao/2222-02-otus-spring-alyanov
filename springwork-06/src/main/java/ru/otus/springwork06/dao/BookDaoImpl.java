@@ -23,8 +23,8 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findAll() {
-        return em.createQuery("select b" +
-                " from Book b").getResultList();
+        return em.createQuery("select distinct b" +
+                " from Book b left join fetch b.commentary").getResultList();
     }
 
     @Override

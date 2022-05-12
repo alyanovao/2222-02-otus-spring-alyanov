@@ -35,7 +35,7 @@ public class Book {
     private List<KindBook> kind;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Commentary.class, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Commentary.class, orphanRemoval = true)
     @JoinColumn(name = "book_id")
     private List<Commentary> commentary;
 }

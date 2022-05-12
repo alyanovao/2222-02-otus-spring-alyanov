@@ -99,6 +99,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @ShellMethod(value = "mergebook", key = {"mergebook", "merge"})
     public void mergeBook() {
+        var id = ioService.readLongWithPrompt("Введите номер книги:");
         var name = ioService.readStringWithPrompt("Введите название книги:");
         var authorId = ioService.readStringWithPrompt("Введите идентификаторы авторов через запятую:");
         var kindId = ioService.readStringWithPrompt("Введите идентификатор жанра:");
@@ -113,7 +114,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         for(String kindBook: kindStringList) {
             kindList.add(library.getKindById(Long.parseLong(kindBook)));
         }
-        Book book = new Book(0, name, authorList, kindList, null);
+        Book book = new Book(id, name, authorList, kindList, new ArrayList<>());
         library.updateBook(book);
     }
 
