@@ -1,7 +1,10 @@
 package ru.otus.springwork06.dao;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.springwork06.model.Book;
+import ru.otus.springwork06.model.Commentary;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,14 +20,15 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Optional<Book> findById(long id) {
-        return Optional.ofNullable(em.createQuery("select b from Book b left join fetch b.kind where b.id = :id", Book.class)
-                .setParameter("id", id).getSingleResult());
+        Book book = em.createQuery("select b from Book b where b.id = :id", Book.class)
+                .setParameter("id", id).getSingleResult();
+        return Optional.ofNullable(book);
     }
 
     @Override
     public List<Book> findAll() {
-        return em.createQuery("select distinct b" +
-                " from Book b left join fetch b.commentary").getResultList();
+        return em.createQuery("select b" +
+                " from Book b").getResultList();
     }
 
     @Override

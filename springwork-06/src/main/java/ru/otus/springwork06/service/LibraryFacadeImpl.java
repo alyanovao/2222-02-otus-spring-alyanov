@@ -1,6 +1,7 @@
 package ru.otus.springwork06.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.springwork06.exception.AuthorNotFoundException;
@@ -12,6 +13,7 @@ import ru.otus.springwork06.model.Commentary;
 import ru.otus.springwork06.model.KindBook;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -59,15 +61,22 @@ public class LibraryFacadeImpl implements LibraryFacade {
     }
 
     @Override
-    //@Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public Book getBookById(long id) {
-        return bookService.findById(id).orElseThrow(BookNotFoundException::new);
+        Book book = bookService.findById(id).orElseThrow(BookNotFoundException::new);
+        Hibernate.initialize(book.getCommentary());
+        return book;
     }
 
     @Override
-    //@Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<Book> getBooks() {
-        return bookService.findAll();
+        List<Book> books =  bookService.findAll();
+        books.stream().map(book -> {
+            Hibernate.initialize(book.getCommentary());
+            return book;
+        }).collect(Collectors.toList());
+        return books;
     }
 
     @Override
