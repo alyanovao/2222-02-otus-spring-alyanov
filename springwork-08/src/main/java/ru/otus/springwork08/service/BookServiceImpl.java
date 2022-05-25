@@ -42,8 +42,4 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Book book) {
         bookRepository.delete(book);
     }
-
-    public List<Book> findBooksByParam(String firstName, String kindName) {
-        return bookRepository.getAllByFirstNameAndKind(firstName, kindName);
-    }
 }

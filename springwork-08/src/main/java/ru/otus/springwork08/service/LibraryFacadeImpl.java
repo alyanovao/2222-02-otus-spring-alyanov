@@ -43,12 +43,17 @@ public class LibraryFacadeImpl implements LibraryFacade {
     }
 
     @Override
+    @Transactional
+    public Author updateAuthor(Author author) {
+        return authorService.merge(author);
+    }
+
+    @Override
     public KindBook getKindById(String id) {
         return kindBookService.findById(id).orElseThrow(KindBookNotFoundException::new);
     }
 
     @Override
-    //@Transactional(readOnly = true)
     public List<KindBook> getKinds() {
         return kindBookService.findAll();
     }
@@ -60,17 +65,17 @@ public class LibraryFacadeImpl implements LibraryFacade {
     }
 
     @Override
+    @Transactional
+    public KindBook updateKind(KindBook kindBook) {
+        return kindBookService.merge(kindBook);
+    }
+
+    @Override
     public Book getBookById(String id) {
         return bookService.findById(id).orElseThrow(BookNotFoundException::new);
     }
 
     @Override
-    public List<Book> findBooksByParam(String firstName, String kindName) {
-        return bookService.findBooksByParam(firstName, kindName);
-    }
-
-    @Override
-    //@Transactional(readOnly = true)
     public List<Book> getBooks() {
         return bookService.findAll();
     }

@@ -21,11 +21,17 @@ import java.util.Arrays;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Import({BookServiceImpl.class, PrintServiceImpl.class})
+@Import({BookServiceImpl.class, PrintServiceImpl.class, AuthorServiceImpl.class, KindBookServiceImpl.class})
 class BookServiceImplTest extends LibraryTest {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private AuthorService authorService;
+
+    @Autowired
+    private KindBookService kindBookService;
 
     @Test
     void findAll() {
@@ -36,7 +42,9 @@ class BookServiceImplTest extends LibraryTest {
     @Test
     void save() {
         val author2 = new Author("Лермонтов", "Михаил", "Юрьевич");
+        authorService.save(author2);
         val kind = new KindBook("kindBook");
+        kindBookService.save(kind);
         bookService.save(new Book("Тест", new ArrayList<>(Arrays.asList(author2)), new ArrayList<>(Arrays.asList(kind)), new ArrayList<>()));
         val books = bookService.findAll();
         assertThat(books.size()).isEqualTo(4);
@@ -44,7 +52,7 @@ class BookServiceImplTest extends LibraryTest {
 
     @Test
     void merge() {
-        val book = bookService.findBooksByParam("Пуш", "Ф").get(0);
+        val book = bookService.findAll().get(0);
         book.setName("Test");
         bookService.merge(book);
         val bookFromService = bookService.findById(book.getId());
@@ -63,7 +71,7 @@ class BookServiceImplTest extends LibraryTest {
 
     @Test
     void findBooksByParam() {
-        val book = bookService.findBooksByParam("Пуш", "Ф");
+        val book = bookService.findAll();
         assertThat(book.size()).isEqualTo(3);
     }
 }

@@ -6,6 +6,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import ru.otus.springwork08.model.Book;
 
@@ -26,10 +27,17 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
     }
 
     @Override
-    public List<Book> getAllByFirstNameAndKind(String firstName, String kind) {
+    public List<Book> getByAuthorId(String id) {
         Criteria booksCriteria = new Criteria();
-        booksCriteria.orOperator(Criteria.where("authors.firstName").regex(firstName),
-                Criteria.where("kind.name").regex(kind));
+        booksCriteria.where("authors.id").is(id);
+        Aggregation aggregation = newAggregation(match(booksCriteria));
+        return mongoTemplate.aggregate(aggregation, Book.class, Book.class).getMappedResults();
+    }
+
+    @Override
+    public List<Book> getByKindBookId(String id) {
+        Criteria booksCriteria = new Criteria();
+        booksCriteria.where("kind.id").is(id);
         Aggregation aggregation = newAggregation(match(booksCriteria));
         return mongoTemplate.aggregate(aggregation, Book.class, Book.class).getMappedResults();
     }

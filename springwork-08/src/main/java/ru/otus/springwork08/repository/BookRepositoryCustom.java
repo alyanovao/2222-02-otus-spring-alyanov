@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface BookRepositoryCustom {
     Book getById(String id);
-    List<Book> getAllByFirstNameAndKind(String firstName, String kind);
+    List<Book> getByAuthorId(String id);
+    List<Book> getByKindBookId(String id);
 }

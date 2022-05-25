@@ -29,8 +29,10 @@ public class Book {
 
     private String name;
 
+    @DBRef
     private List<Author> authors;
 
+    @DBRef
     private List<KindBook> kind;
 
     @DBRef

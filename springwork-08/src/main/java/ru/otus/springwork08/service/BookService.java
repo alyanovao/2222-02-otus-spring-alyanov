@@ -8,8 +8,6 @@ import java.util.Optional;
 public interface BookService {
     Optional<Book> findById(String id);
 
-    public List<Book> findBooksByParam(String firstName, String kindName);
-
     List<Book> findAll();
 
     Book save(Book book);

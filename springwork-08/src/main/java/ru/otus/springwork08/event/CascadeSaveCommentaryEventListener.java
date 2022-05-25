@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.event.BeforeDeleteEvent;
 import ru.otus.springwork08.model.Book;
 import ru.otus.springwork08.model.Commentary;
 import ru.otus.springwork08.repository.BookRepository;
-import ru.otus.springwork08.repository.CommentaryRepository;
 
 import java.util.ArrayList;
 
@@ -16,9 +15,6 @@ public class CascadeSaveCommentaryEventListener extends AbstractMongoEventListen
 
     @Autowired
     private BookRepository repository;
-
-    @Autowired
-    private CommentaryRepository commentaryRepository;
 
     @Override
     public void onAfterSave(AfterSaveEvent<Object> event) {

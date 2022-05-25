@@ -42,6 +42,27 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @ShellMethod(value = "mergeauthor", key = {"mergeauthor", "ma"})
+    public void mergeAuthor() {
+        val id = ioService.readStringWithPrompt("Введите идентификатор:");
+        try {
+            Author author = library.getAuthorById(id);
+
+            var firstName = ioService.readStringWithPrompt("Введите фамилию автора:");
+            var lastName = ioService.readStringWithPrompt("Введите имя автора:");
+            var patronymic = ioService.readStringWithPrompt("Введите отчество автора:");
+
+            author.setFirstName(firstName);
+            author.setLastName(lastName);
+            author.setPatronymic(patronymic);
+            library.updateAuthor(author);
+        }
+        catch (AuthorNotFoundException e) {
+            ioService.outputMessage("Указанный втор не найден");
+        }
+    }
+
+    @Override
     @ShellMethod(value = "getkinds", key = {"getkinds", "gk"})
     public void getKindBooks() {
         printService.printKindBook(library.getKinds());
@@ -56,6 +77,21 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @ShellMethod(value = "mergekind", key = {"mergekind", "mk"})
+    public void updateKindBook() {
+        try {
+            val id = ioService.readStringWithPrompt("Введите идентификатор:");
+            val kind = library.getKindById(id);
+            val kindName = ioService.readStringWithPrompt("Введите название жанра:");
+            kind.setName(kindName);
+            library.updateKind(kind);
+        }
+        catch (KindBookNotFoundException e) {
+            ioService.outputMessage("Указанный жанр не найден");
+        }
+    }
+
+    @Override
     @ShellMethod(value = "getbook", key = {"getbookbyid", "gi"})
     public void getBookById() {
         var id = ioService.readStringWithPrompt(WRITE_BOOK_NUMBER);
@@ -65,14 +101,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         catch (BookNotFoundException e) {
             ioService.outputMessage("Указанная книга не найдена");
         }
-    }
-
-    @ShellMethod(value = "getbooksbyparams", key = {"getbooksbyparams", "bs"})
-    public void getBooksByParams() {
-        var firstName = ioService.readStringWithPrompt("Введите фио автора:");
-        var kind = ioService.readStringWithPrompt("Введите жанр:");
-        List<Book> books = library.findBooksByParam(firstName, kind);
-        printService.printBook(books);
     }
 
     @Override

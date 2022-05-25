@@ -9,4 +9,6 @@ public interface AuthorService {
     Optional<Author> findById(String id);
     List<Author> findAll();
     Author save(Author author);
+
+    Author merge(Author author);
 }

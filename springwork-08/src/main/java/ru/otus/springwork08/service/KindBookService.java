@@ -9,4 +9,5 @@ public interface KindBookService {
     Optional<KindBook> findById(String id);
     List<KindBook> findAll();
     KindBook save(KindBook kind);
+    KindBook merge(KindBook kind);
 }

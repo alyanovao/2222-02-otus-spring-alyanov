@@ -30,4 +30,10 @@ public class AuthorServiceImpl implements AuthorService {
     public Author save(Author author) {
         return authorRepository.save(author);
     }
+
+    @Override
+    @Transactional
+    public Author merge(Author author) {
+        return authorRepository.save(author);
+    }
 }

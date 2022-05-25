@@ -15,17 +15,19 @@ public interface LibraryFacade {
 
     Author saveAuthor(Author author);
 
+    Author updateAuthor(Author author);
+
     KindBook getKindById(String id);
 
     List<KindBook> getKinds();
 
     KindBook saveKind(KindBook kind);
 
+    KindBook updateKind(KindBook kindBook);
+
     Book getBookById(String id);
 
     List<Book> getBooks();
-
-    public List<Book> findBooksByParam(String firstName, String kindName);
 
     Book saveBook(Book book);
 

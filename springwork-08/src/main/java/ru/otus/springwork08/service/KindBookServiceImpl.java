@@ -30,4 +30,9 @@ public class KindBookServiceImpl implements KindBookService {
     public KindBook save(KindBook kind) {
         return kindBookRepository.save(kind);
     }
+
+    @Override
+    public KindBook merge(KindBook kind) {
+        return kindBookRepository.save(kind);
+    }
 }
