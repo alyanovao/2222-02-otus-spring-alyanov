@@ -1,0 +1,14 @@
+spring:
+  mongodb:
+    embedded:
+      version: 3.5.5
+  data:
+    mongodb:
+      port: 2717
+      database: mongoDB
+      host: localhost
+  main:
+    allow-circular-references: true
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package: ru.otus.springwork08.data.Changelog
