@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заведение автора</title>
+    <link th:href="@{/styles/editStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<form id="edit-form" action="bookDelete.html" th:method="post" th:action="@{/bookDelete(id=${book.id})}" th:object="${book}">
+    <h3>Person Info:</h3>
+
+    <div class="row">
+        <label for="id-input">ID:</label>
+        <input id="id-input" type="text" readonly="readonly" value="1" th:value="*{id}"/>
+    </div>
+
+    <div class="row">
+        <label for="bookDelete-input">Название:</label>
+        <input id="bookDelete-input" name="name" readonly="readonly" type="text" value="John Doe" th:value="*{name}"/>
+    </div>
+
+    <div class="row">
+        <button type="submit">Удалить</button>
+        <a href="book.html" th:href="@{/book}"><button type="button">Отмена</button></a>
+    </div>
+</form>
+</body>
+</html>

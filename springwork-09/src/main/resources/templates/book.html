@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link th:href="@{/styles/tableStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    <span><a href="author.html" th:href="@{/author}">Авторы</a></span>
+    <span><a href="kindBook.html" th:href="@{/kindBook}">Жанры</a></span>
+    <span><a hter="author.html" th:href="@{/}">На главную</a></span>
+</div>
+<table class="library">
+    <thead>
+    <tr>
+        <td>Название</td>
+        <td>Автор</td>
+        <td>Жанр</td>
+        <td>Комментарии</td>
+        <td>Редактировать книгу</td>
+        <td>Добавить книгу</td>
+        <td>Удалить книгу</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.name}">name</td>
+        <td th:text="${book.author}">firstName</td>
+        <td th:text="${book.kind}">name</td>
+        <div th:if="${!book.commentary.empty}">
+            <td th:text="${book.commentary}">value</td>
+        </div>
+        <div th:unless="${!book.commentary.empty}">
+            <td></td>
+        </div>
+        <td><a href="bookEdit.html" th:href="@{/bookEdit(id=${book.id})}">Редактировать</a>
+        <td><a href="bookAdd.html" th:href="@{/bookAdd}">Создать</a></td>
+        <td><a href="bookDelete.html" th:href="@{/bookDelete(id=${book.id})}">Удалить книгу</a>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
