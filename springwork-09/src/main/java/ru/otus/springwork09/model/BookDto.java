@@ -17,17 +17,13 @@ public class BookDto {
     public static BookDto toDto(Book book) {
         return new BookDto(book.getId(),
                 book.getName(),
-                book.getAuthors().stream().map(author -> {
-                    return author.getFirstName() + " " +
-                            author.getLastName() + " " +
-                            author.getPatronymic();
-                }).collect(Collectors.joining(", ")),
-                book.getKind().stream().map(kind -> {
-                    return kind.getName();
-                }).collect(Collectors.joining(", ")),
-                book.getCommentary().stream().map(commentary -> {
-                    return commentary.getValue();
-                }).collect(Collectors.joining(", "))
+                book.getAuthors().stream().map(author1 ->
+                            author1.getFirstName() + " " +
+                            author1.getLastName() + " " +
+                            author1.getPatronymic()
+                ).collect(Collectors.joining(", ")),
+                book.getKind().stream().map(KindBook::getName).collect(Collectors.joining(", ")),
+                book.getCommentary().stream().map(Commentary::getValue).collect(Collectors.joining(", "))
         );
     }
 }

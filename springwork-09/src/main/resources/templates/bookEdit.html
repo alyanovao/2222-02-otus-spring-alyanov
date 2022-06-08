@@ -7,7 +7,7 @@
 </head>
 <body>
 <form id="edit-form" action="bookEdit.html" th:method="post" th:action="@{/bookEdit(id=${book.id})}" th:object="${book}">
-    <h3>Person Info:</h3>
+    <h3>Редактирование книги:</h3>
 
     <div class="row">
         <label for="id-input">ID:</label>
@@ -19,28 +19,30 @@
         <input id="bookEdit-input" name="name" type="text" value="John Doe" th:value="*{name}"/>
     </div>
 
-    <div class="row" th:object="${author}">
-        <select name="id" class="form-control" id="form-input">
+    <div class="row" th:field="*{author}">
+        <label for="form-input">Автор:</label>
+        <select name="author" class="form-control" id="form-input">
             <option th:each="author : ${authors}"
-                    th:value="${author}"
-                    th:text="${author.name}">
+                    th:value="${author.id}"
+                    th:text="${author.firstName} + ' ' + ${author.lastName} + ' ' + ${author.patronymic}"
+                    selected="true" th:selected="${book.author.id == author.id}">Автор</option>
         </select>
     </div>
-    <!--
-    <div class="row">
-        <form th:object="${authorDto}">
-            <label for="form-input">Выберите автора:</label>
-            <select class="form-control" id="form-input" multiple="multiple">
-                <option th:each="author : ${authorDto.authorList}"
-                        th:value="${{author.id}}"
-                        th:text="${author.name}">
-                </option>
-            </select>
-            <input type="submit" value="Save" />
-        </form>
-    </div>
-    -->
 
+    <div class="row" th:field="*{kind}">
+        <label for="kindbook-input">Жанр:</label>
+        <select name="kind" class="form-control" id="kindbook-input">
+            <option th:each="kind : ${kindList}"
+                    th:value="${kind.id}"
+                    th:text="${kind.name}"
+                    selected="true" th:selected="${book.kind.id == kind.id}">Автор</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="commentary-input">Комментарий:</label>
+        <input id="commentary-input" th:field="*{commentary.value}" type="text" value="John Doe"/>
+    </div>
     <div class="row">
         <button type="submit">Сохранить</button>
         <a href="book.html" th:href="@{/book}"><button type="button">Отмена</button></a>

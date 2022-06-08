@@ -20,7 +20,7 @@ public class CommentaryServiceImpl implements CommentaryService {
 
     @Override
     public Commentary getById(long id) {
-        return commentaryDao.getById(id);
+        return commentaryDao.getReferenceById(id);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     @Override
     @Transactional
     public void delete(long id) {
-        var commentary = commentaryDao.getById(id);
+        var commentary = commentaryDao.getReferenceById(id);
         commentaryDao.delete(commentary);
     }
 }

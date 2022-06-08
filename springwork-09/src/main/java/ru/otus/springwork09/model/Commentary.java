@@ -22,5 +22,5 @@ public class Commentary {
     private String value;
 
     @Column(name = "book_id")
-    private long book_id;
+    private long bookId;
 }

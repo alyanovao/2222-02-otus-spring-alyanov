@@ -40,39 +40,33 @@ public class BookController {
     @GetMapping("/bookEdit")
     public String editBookPage(@RequestParam(required = false, name = "id") long id, Model model) {
         val book = bookService.findById(id).orElseThrow(BookNotFoundException::new);
-        model.addAttribute("book", book);
+        val bookDto = BookSimpleDto.toDto(book);
+        model.addAttribute("book", bookDto);
 
         val authorList = authorService.findAll();
-        List<AuthorDto> authors = new ArrayList<>();
-        for (Author author : authorList) {
-            authors.add(AuthorDto.toDto(author));
-        }
-        AuthorDtoList authorDto = new AuthorDtoList();
-        authorDto.setAuthorList(authors);
-        model.addAttribute("authors", authors);
+        model.addAttribute("authors", authorList);
         model.addAttribute("kindList", kindBookService.findAll());
         return "bookEdit";
     }
 
     @PostMapping("/bookEdit")
-    public  String editBook(@ModelAttribute("book") Book book, @ModelAttribute("author") AuthorDto author) {//TODO - не работает множественная выборка @ModelAttribute("authorDto") AuthorDtoList authorDto) {
-        val newAuthor = authorService.findById(author.getId()).orElseThrow(AuthorNotFoundException::new);
-        val bookSave = new Book(book.getId(), book.getName(), new ArrayList<>(Arrays.asList(newAuthor)), new ArrayList<>(), new ArrayList<>());
-        bookService.save(bookSave);
+    public  String editBook(@ModelAttribute("book") BookSimpleDto book) {
+        val book1 = BookSimpleDto.fromDto(book);
+        bookService.save(book1);
         return "redirect:/book";
     }
 
     @GetMapping("/bookAdd")
     public String addBookPage(Model model) {
-        val book = new Book();
+        val book = new BookSimpleDto();
         model.addAttribute("book", book);
         model.addAttribute("authorList", authorService.findAll());
         model.addAttribute("kindList", kindBookService.findAll());
         return "bookAdd";
     }
     @PostMapping("/bookAdd")
-    public String addBook(Book book) {
-        val bookSave = new Book(book.getId(), book.getName(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    public String addBook(BookSimpleDto book) {
+        val bookSave = BookSimpleDto.fromDto(book);
         bookService.save(bookSave);
         return "redirect:/book";
     }
@@ -84,7 +78,7 @@ public class BookController {
     }
 
     @PostMapping("/bookDelete")
-    private String deleteBook(long id) {
+    public String deleteBook(long id) {
         val book = bookService.findById(id).orElseThrow(BookNotFoundException::new);
         bookService.deleteBook(book);
         return "redirect:/book";

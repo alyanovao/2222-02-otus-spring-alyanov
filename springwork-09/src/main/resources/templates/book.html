@@ -26,8 +26,8 @@
     <tbody>
     <tr th:each="book : ${books}">
         <td th:text="${book.name}">name</td>
-        <td th:text="${book.author}">firstName</td>
-        <td th:text="${book.kind}">name</td>
+        <td th:text="${book.author}">author</td>
+        <td th:text="${book.kind}">kind</td>
         <div th:if="${!book.commentary.empty}">
             <td th:text="${book.commentary}">value</td>
         </div>

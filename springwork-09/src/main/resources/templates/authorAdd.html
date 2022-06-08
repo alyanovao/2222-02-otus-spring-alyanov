@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Заведение автора</title>
+    <title>Добавление автора</title>
     <link th:href="@{/styles/editStyle.css}" rel="stylesheet"/>
 </head>
 <body>
 <form id="edit-form" action="authorAdd.html" th:method="post" th:action="@{/authorAdd}" th:object="${author}">
-    <h3>Person Info:</h3>
+    <h3>Добавление автора:</h3>
 
     <div class="row">
         <label for="author-firstname-input">Имя:</label>

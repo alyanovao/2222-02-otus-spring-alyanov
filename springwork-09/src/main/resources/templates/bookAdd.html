@@ -7,11 +7,27 @@
 </head>
 <body>
 <form id="edit-form" action="bookAdd.html" th:method="post" th:action="@{/bookAdd}" th:object="${book}">
-    <h3>Person Info:</h3>
+    <h3>Добавление книги:</h3>
 
     <div class="row">
         <label for="bookEdit-input">Название:</label>
         <input id="bookEdit-input" name="name" type="text" value="John Doe" th:value="*{name}"/>
+    </div>
+    <div class="row" th:field="*{author}">
+        <label for="form-input">Автор:</label>
+        <select name="author" class="form-control" id="form-input">
+            <option th:each="author : ${authorList}"
+                    th:value="${author.id}"
+                    th:text="${author.firstName}">Автор</option>
+        </select>
+    </div>
+    <div class="row" th:field="*{kind}">
+        <label for="kindbook-input">Жанр:</label>
+        <select name="kind" class="form-control" id="kindbook-input">
+            <option th:each="kind : ${kindList}"
+                    th:value="${kind.id}"
+                    th:text="${kind.name}">Автор</option>
+        </select>
     </div>
 
     <div class="row">

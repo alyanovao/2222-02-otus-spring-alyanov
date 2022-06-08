@@ -1,8 +1,6 @@
 package ru.otus.springwork09.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
