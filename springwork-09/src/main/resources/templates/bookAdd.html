@@ -13,17 +13,18 @@
         <label for="bookEdit-input">Название:</label>
         <input id="bookEdit-input" name="name" type="text" value="John Doe" th:value="*{name}"/>
     </div>
-    <div class="row" th:field="*{author}">
+    <div class="row">
         <label for="form-input">Автор:</label>
-        <select name="author" class="form-control" id="form-input">
-            <option th:each="author : ${authorList}"
+        <select th:field="*{author}" name="author" class="form-control" id="form-input" multiple="multiple">
+            <option th:each="author : ${authors}"
                     th:value="${author.id}"
-                    th:text="${author.firstName}">Автор</option>
+                    th:text="${author.firstName} + ' ' + ${author.lastName} + ' ' + ${author.patronymic}">Автор</option>
         </select>
     </div>
-    <div class="row" th:field="*{kind}">
+
+    <div class="row">
         <label for="kindbook-input">Жанр:</label>
-        <select name="kind" class="form-control" id="kindbook-input">
+        <select th:field="*{kind}" name="kind" class="form-control" id="kindbook-input" multiple="multiple">
             <option th:each="kind : ${kindList}"
                     th:value="${kind.id}"
                     th:text="${kind.name}">Автор</option>

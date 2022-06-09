@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.otus.springwork09.exception.AuthorNotFoundException;
 import ru.otus.springwork09.exception.BookNotFoundException;
 import ru.otus.springwork09.model.*;
 import ru.otus.springwork09.service.AuthorService;
@@ -16,7 +15,6 @@ import ru.otus.springwork09.service.BookService;
 import ru.otus.springwork09.service.KindBookService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -40,7 +38,7 @@ public class BookController {
     @GetMapping("/bookEdit")
     public String editBookPage(@RequestParam(required = false, name = "id") long id, Model model) {
         val book = bookService.findById(id).orElseThrow(BookNotFoundException::new);
-        val bookDto = BookSimpleDto.toDto(book);
+        val bookDto = BookModelDto.toDto(book);
         model.addAttribute("book", bookDto);
 
         val authorList = authorService.findAll();
@@ -50,23 +48,23 @@ public class BookController {
     }
 
     @PostMapping("/bookEdit")
-    public  String editBook(@ModelAttribute("book") BookSimpleDto book) {
-        val book1 = BookSimpleDto.fromDto(book);
+    public  String editBook(@ModelAttribute("book") BookModelDto book) {
+        val book1 = BookModelDto.fromDto(book);
         bookService.save(book1);
         return "redirect:/book";
     }
 
     @GetMapping("/bookAdd")
     public String addBookPage(Model model) {
-        val book = new BookSimpleDto();
+        val book = new BookModelDto();
         model.addAttribute("book", book);
-        model.addAttribute("authorList", authorService.findAll());
+        model.addAttribute("authors", authorService.findAll());
         model.addAttribute("kindList", kindBookService.findAll());
         return "bookAdd";
     }
     @PostMapping("/bookAdd")
-    public String addBook(BookSimpleDto book) {
-        val bookSave = BookSimpleDto.fromDto(book);
+    public String addBook(BookModelDto book) {
+        val bookSave = BookModelDto.fromDto(book);
         bookService.save(bookSave);
         return "redirect:/book";
     }

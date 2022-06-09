@@ -4,33 +4,35 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookSimpleDto {
+public class BookModelDto {
     private long id;
     private String name;
-    private Author author;
-    private KindBook kind;
+    private List<Author> author;
+    private List<KindBook> kind;
     private Commentary commentary;
 
-    public static BookSimpleDto toDto(Book book) {
-        return new BookSimpleDto(book.getId(), book.getName(),
-                book.getAuthors().stream().findFirst().orElse(new Author()),
-                book.getKind().stream().findFirst().orElse(new KindBook()),
+    public static BookModelDto toDto(Book book) {
+        return new BookModelDto(book.getId(), book.getName(),
+                book.getAuthors().stream().collect(Collectors.toList()),
+                book.getKind().stream().collect(Collectors.toList()),
                 book.getCommentary().stream().findFirst().orElse(new Commentary()));
     }
 
-    public static Book fromDto(BookSimpleDto bookSimpleDto) {
+    public static Book fromDto(BookModelDto bookSimpleDto) {
         val commentary = bookSimpleDto.getCommentary();
         if (commentary != null) {
             commentary.setBookId(bookSimpleDto.getId());
         }
         return new Book(bookSimpleDto.getId(), bookSimpleDto.getName(),
-                new ArrayList<>(Arrays.asList(bookSimpleDto.getAuthor())),
-                new ArrayList<>(Arrays.asList(bookSimpleDto.getKind())),
+                bookSimpleDto.getAuthor(),
+                bookSimpleDto.getKind(),
                 new ArrayList<>(Arrays.asList(commentary)));
     }
 }
