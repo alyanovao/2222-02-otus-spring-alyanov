@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление автора</title>
+    <link th:href="@{/styles/editStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<form id="edit-form" action="authorAdd.html" th:method="post" th:action="@{/authorAdd}" th:object="${author}">
+    <h3>Добавление автора:</h3>
+
+    <div class="row">
+        <label for="author-firstname-input">Имя:</label>
+        <input id="author-firstname-input" name="firstName" type="text" value="John Doe" th:value="*{firstName}"/>
+    </div>
+    <div class="row">
+        <label for="author-lastname-input">Фамилия:</label>
+        <input id="author-lastname-input" name="lastName" type="text" value="John Doe" th:value="*{lastName}"/>
+    </div>
+    <div class="row">
+        <label for="author-patronymic-input">Отчество:</label>
+        <input id="author-patronymic-input" name="patronymic" type="text" value="John Doe" th:value="*{patronymic}"/>
+    </div>
+
+    <div class="row">
+        <button type="submit">Сохранить</button>
+        <a href="author.html" th:href="@{/author}"><button type="button">Отмена</button></a>
+    </div>
+</form>
+</body>
+</html>

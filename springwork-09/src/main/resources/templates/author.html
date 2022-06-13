@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link th:href="@{/styles/tableStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    <span><a href="book.html" th:href="@{/book}">Книги</a></span>
+    <span><a href="kindBook.html" th:href="@{/kindBook}">Жанры</a></span>
+    <span><a hter="author.html" th:href="@{/}">На главную</a></span>
+</div>
+<table class="library">
+    <thead>
+    <tr>
+        <td>Фамилия</td>
+        <td>Имя</td>
+        <td>Отчество</td>
+        <td>Редактировать автора</td>
+        <td>Завести автора</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.firstName}">firstname</td>
+        <td th:text="${author.lastName}">lastname</td>
+        <td th:text="${author.patronymic}">patronymic</td>
+        <td><a href="authorEdit.html" th:href="@{/authorEdit(id=${author.id})}">Редактировать</a></td>
+        <td><a href="authorAdd.html" th:href="@{/authorAdd}">Создать</a></td>
+    </tbody>
+</table>
+</body>
+</html>
