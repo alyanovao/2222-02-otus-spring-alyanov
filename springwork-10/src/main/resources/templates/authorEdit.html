@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование автора</title>
+    <link th:href="@{/styles/editStyle.css}" rel="stylesheet"/>
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/author.js" th:src="@{/author.js}"></script>
+</head>
+<body>
+<form id="edit-form">
+    <h3>Редактирование автора:</h3>
+
+    <div class="row" th:if="${isEdit} == true">
+        <label for="id-input">ID:</label>
+        <input id="id-input" type="text" readonly="readonly" value="1" th:value="${id}"/>
+    </div>
+    <div class="row">
+        <label for="author-firstname-input">Имя:</label>
+        <input id="author-firstname-input" name="firstName" type="text" value="John Doe" th:value="${author.firstName}"/>
+    </div>
+    <div class="row">
+        <label for="author-lastName-input">Имя:</label>
+        <input id="author-lastName-input" name="lastName" type="text" value="John Doe" th:value="${author.lastName}"/>
+    </div>
+    <div class="row">
+        <label for="author-patronymic-input">Отчество:</label>
+        <input id="author-patronymic-input" name="patronymic" type="text" value="John Doe" th:value="${author.patronymic}"/>
+    </div>
+    <div class="row">
+        <button type="button" onclick="saveAuthor()">Сохранить</button>
+        <a href="author.html" th:href="@{/authors}"><button type="button">Отмена</button></a>
+    </div>
+
+</form>
+<script>
+    $(document).ready(getAuthor())
+</script>
+</body>
+</html>
