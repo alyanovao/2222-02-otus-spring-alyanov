@@ -19,6 +19,9 @@
         <module>springwork-06</module>
         <module>springwork-07</module>
         <module>springwork-08</module>
+        <module>springwork-09</module>
+        <module>springwork-10</module>
+        <module>springwork-11</module>
     </modules>
 
 </project>
