@@ -31,6 +31,7 @@ public class CascadeSaveCommentaryEventListener extends AbstractMongoEventListen
                                 .orElse(null) == null) {
                             commentaries.add(commentaryBook);
                             book1.setCommentary(commentaries);
+                            repository.save(book1);
                         }
                         return book1;
                     })

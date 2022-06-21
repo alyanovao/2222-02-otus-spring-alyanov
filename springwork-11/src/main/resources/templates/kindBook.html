@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link th:href="@{/styles/tableStyle.css}" rel="stylesheet"/>
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/kindBook.js" th:src="@{/kindBook.js}"></script>
+</head>
+<body>
+<div>
+    <span><a href="book.html" th:href="@{/book}">Книги</a></span>
+    <span><a href="author.html" th:href="@{/authors}">Авторы</a></span>
+    <span><a hter="author.html" th:href="@{/}">На главную</a></span>
+</div>
+<table class="library">
+    <thead>
+    <tr>
+        <td>Название</td>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    $(document).ready(kindBookList());
+</script>
+</body>
+</html>
