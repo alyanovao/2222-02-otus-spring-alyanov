@@ -13,9 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("author")
 public class Author {
 
-    public Author(String firstName, String lastName, String patronymic) {
-        this.firstName = firstName;
+    public Author(String lastName, String firstName, String patronymic){
         this.lastName = lastName;
+        this.firstName = firstName;
         this.patronymic = patronymic;
     }
 

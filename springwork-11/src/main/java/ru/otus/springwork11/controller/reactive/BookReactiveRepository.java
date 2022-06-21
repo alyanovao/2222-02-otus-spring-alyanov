@@ -2,6 +2,7 @@ package ru.otus.springwork11.controller.reactive;
 
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -13,6 +14,8 @@ import ru.otus.springwork11.repository.CommentaryRepository;
 import ru.otus.springwork11.repository.KindBookRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,6 +48,43 @@ public class BookReactiveRepository {
 
     @PostMapping("/api/book")
     public Mono<ResponseEntity<Book>> saveBook(@RequestBody BookSaveDto bookDto) {
+        List<Commentary> list = new ArrayList<>();
+        if (bookDto.getCommentary() != null) {
+            val commentary = new Commentary(bookDto.getCommentary(), bookDto.getId());
+            commentaryRepository.save(commentary)
+                    .map(c -> list.add(c))
+                    .subscribe();
+        }
+
+        return Mono.just(new Book())
+                .map(book -> {
+                    book.setId(bookDto.getId());
+                    book.setName(bookDto.getName());
+                    book.setAuthors(new ArrayList<>());
+                    book.setKind(new ArrayList<>());
+                    book.setCommentary(list);
+                    return book;
+                })
+                .flatMapMany(book -> {
+                    return authorRepository.findAllById(bookDto.getAuthorId())
+                            .map(author -> {
+                                book.getAuthors().add(author);
+                                return book;
+                            });
+                }).last()
+                .flatMapMany(book -> {
+                    return kindBookRepository.findAllById(bookDto.getKindId())
+                            .map(kind -> {
+                                book.getKind().add(kind);
+                                return book;
+                            });
+                }).last()
+                .flatMap(book -> {
+                    return repository.save(book).map(res -> new ResponseEntity<>(res, HttpStatus.OK));
+                })
+                .defaultIfEmpty(new ResponseEntity<Book>(HttpStatus.NOT_FOUND));
+
+        /*
         List<Author> authors = new ArrayList<>();
         authorRepository.findAllById(bookDto.getAuthorId())
                 .map(author -> authors.add(author))
@@ -66,6 +106,7 @@ public class BookReactiveRepository {
         return repository.save(book)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
+        */
     }
 
     @DeleteMapping("/api/book/{id}")

@@ -39,7 +39,7 @@ function getBook() {
     $.get('/api/authors').done(function (authors) {
         authors.forEach(function (author) {
             $('#form-input').append(`
-            <option value=${author.id}>${author.firstName} ${author.lastName} ${author.patronymic}</option>
+            <option value=${author.id}>${author.lastName} ${author.firstName} ${author.patronymic}</option>
             `)
         })
     })

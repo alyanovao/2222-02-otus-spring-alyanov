@@ -20,8 +20,8 @@ public class BookDto {
         return new BookDto(book.getId(),
                 book.getName(),
                 book.getAuthors().stream().map(author1 ->
-                            author1.getFirstName() + " " +
                             author1.getLastName() + " " +
+                            author1.getFirstName() + " " +
                             author1.getPatronymic()
                 ).collect(Collectors.joining(", ")),
                 book.getKind().stream().map(KindBook::getName).collect(Collectors.joining(", ")),

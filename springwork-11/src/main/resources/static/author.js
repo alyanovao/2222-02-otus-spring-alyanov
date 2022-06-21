@@ -1,10 +1,10 @@
 function authorList() {
     $.get('/api/authors').done(function (authors) {
-    authors.forEach(function (author) {
-        $('tbody').append(`
+        authors.forEach(function (author) {
+            $('tbody').append(`
                 <tr>
-                    <td>${author.firstName}</td>
                     <td>${author.lastName}</td>
+                    <td>${author.firstName}</td>
                     <td>${author.patronymic}</td>
                     <td><a href="/author/edit/${author.id}">Редактировать</a></td>
                     <td><a href="/author/edit">Создать</a></td>
@@ -23,8 +23,8 @@ function getAuthor() {
         url = '/api/author'
     }
     $.get(url).done(function (author) {
-        $('#author-firstname-input').val(author.firstName)
         $('#author-lastName-input').val(author.lastName)
+        $('#author-firstName-input').val(author.firstName)
         $('#author-patronymic-input').val(author.patronymic)
     })
 }
@@ -38,7 +38,7 @@ function saveAuthor() {
             cache: false,
             data: JSON.stringify({
                 id:$('#id-input').val(),
-                firstName:$('#author-firstname-input').val(),
+                firstName:$('#author-firstName-input').val(),
                 lastName:$('#author-lastName-input').val(),
                 patronymic:$('#author-patronymic-input').val()
             }),
