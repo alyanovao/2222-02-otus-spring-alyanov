@@ -3,7 +3,6 @@ package ru.otus.springwork08.data;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
-import jdk.jshell.Snippet;
 import org.jetbrains.annotations.NotNull;
 import ru.otus.springwork08.model.Author;
 import ru.otus.springwork08.model.Book;

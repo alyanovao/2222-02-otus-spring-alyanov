@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link th:href="@{/styles/tableStyle.css}" rel="stylesheet"/>
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/book.js" th:src="@{/book.js}"></script>
+</head>
+<body>
+<div>
+    <span><a href="author.html" th:href="@{/authors}">Авторы</a></span>
+    <span><a href="kindBook.html" th:href="@{/kindBook}">Жанры</a></span>
+    <span><a hter="author.html" th:href="@{/}">На главную</a></span>
+</div>
+<table class="library">
+    <thead>
+    <tr>
+        <td>Название</td>
+        <td>Автор</td>
+        <td>Жанр</td>
+        <td>Комментарии</td>
+        <td>Редактировать книгу</td>
+        <td>Добавить книгу</td>
+        <td>Удалить книгу</td>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    $(document).ready(bookList());
+</script>
+</body>
+</html>

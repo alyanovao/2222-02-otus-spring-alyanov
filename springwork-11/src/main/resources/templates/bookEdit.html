@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link th:href="@{/styles/editStyle.css}" rel="stylesheet"/>
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/book.js" th:src="@{/book.js}"></script>
+</head>
+<body>
+<form id="edit-form" action="bookEdit.html">
+    <h3>Редактирование книги:</h3>
+
+    <div class="row" th:if="${isEdit} == true">
+        <label for="book-id-input">ID:</label>
+        <input id="book-id-input" type="text" readonly="readonly" value="1" th:value="${id}"/>
+    </div>
+
+    <div class="row">
+        <label for="bookEdit-input">Название:</label>
+        <input id="bookEdit-input" name="name" type="text" value="name"/>
+    </div>
+
+    <div class="row">
+        <label for="form-input">Автор:</label>
+        <select name="author" class="form-control" id="form-input" multiple="multiple">
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="kindbook-input">Жанр:</label>
+        <select name="kind" class="form-control" id="kindbook-input" multiple="multiple">
+        </select>
+    </div>
+
+    <div class="row" th:if="${isEdit} == true">
+        <label for="commentary-input">Комментарий:</label>
+        <input id="commentary-input" name="commentary" type="text" value="commentary"/>
+    </div>
+
+    <div class="row">
+        <button type="button" onclick="saveBook()">Сохранить</button>
+        <a href="book.html" th:href="@{/book}"><button type="button">Отмена</button></a>
+    </div>
+</form>
+<script>
+    $(document).ready(getBook())
+</script>
+</body>
+</html>
