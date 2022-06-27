@@ -1,6 +1,6 @@
 package ru.otus.springwork12.controller;
 
-import com.sun.xml.bind.v2.runtime.reflect.Lister;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -11,21 +11,26 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import ru.otus.springwork12.repository.UserDao;
 import ru.otus.springwork12.service.AuthorService;
 import ru.otus.springwork12.service.BookService;
 import ru.otus.springwork12.service.CustomAuthenticationProvider;
 import ru.otus.springwork12.service.KindBookService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(BookController.class)
 @Import({CustomAuthenticationProvider.class, UserDao.class})
 class BookControllerTest {
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,15 +50,23 @@ class BookControllerTest {
     @MockBean
     private PasswordEncoder encoder;
 
-//    @WithMockUser(
-//            username = "user",
-//            authorities = "USER"
-//    )
+    @BeforeEach
+    void setUp() {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
+    }
+
+    @WithMockUser(
+            username = "user",
+            authorities = "USER"
+    )
 
     @Test
     void getBook() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/book"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -64,8 +77,9 @@ class BookControllerTest {
 
     @Test
     void editBook() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/bookEdit"))
-                .andExpect(status().is4xxClientError());
+        mockMvc.perform(MockMvcRequestBuilders.post("/bookEdit?id=1")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
@@ -76,7 +90,8 @@ class BookControllerTest {
 
     @Test
     void deleteBook() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/book"))
-                .andExpect(status().is4xxClientError());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/book?id=1")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
     }
 }

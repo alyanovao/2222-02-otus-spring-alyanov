@@ -15,18 +15,14 @@ import ru.otus.springwork12.service.CustomAuthenticationProvider;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider authenticationProvider;
-    //private final CustomUserDetailsService userDetailsService;
 
     @Override
     public void configure(WebSecurity web) {
-        //web.ignoring().antMatchers("/login");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/*").authenticated()
-                //.and()
-                //.authorizeRequests().antMatchers("/author").authenticated()
                 .and()
                 .formLogin();
     }
@@ -34,6 +30,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider);
-        //auth.userDetailsService(userDetailsService);
     }
 }
