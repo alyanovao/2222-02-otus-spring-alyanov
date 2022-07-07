@@ -1,0 +1,32 @@
+spring:
+  shell:
+    interactive:
+      enabled: false
+  main:
+    allow-circular-references: true
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      isolation-level-for-create: REPEATABLE_READ
+      initialize-schema: NEVER
+  datasource:
+    url: jdbc:h2:mem:h2db
+    driverClassName: org.h2.Driver
+  flyway:
+    enable: true
+    locations: migration
+  data:
+    mongodb:
+      port: 2717
+      database: mongoDB
+      host: localhost
+  jpa:
+    generated-ddl: false
+    hibernate:
+      ddl-auto: none
+
+      show-sql: true
+  logging:
+    root: info
+    org.springframework: info
