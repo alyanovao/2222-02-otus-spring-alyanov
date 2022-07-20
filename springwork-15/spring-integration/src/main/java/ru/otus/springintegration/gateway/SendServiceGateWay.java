@@ -21,4 +21,6 @@ public interface SendServiceGateWay {
     @Gateway(requestChannel = "integration.send.error.sendMailError.channel")
     Message handleSendMailErrorFlow(Message<?> message);
 
+    @Gateway(requestChannel = "integration.send.error.applicationError.channel")
+    Message handleApplicationErrorFlow(Message<?> message);
 }

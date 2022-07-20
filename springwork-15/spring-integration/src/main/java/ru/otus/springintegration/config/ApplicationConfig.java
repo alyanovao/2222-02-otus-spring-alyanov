@@ -100,8 +100,10 @@ public class ApplicationConfig {
             msg = sendServiceGateWay.handleTimeoutErrorFlow(message);
         else if(message.getPayload().toString().contains("MailSendException"))
             msg = sendServiceGateWay.handleSendMailErrorFlow(message);
-        else
+        else if (message.getPayload().toString().contains("HTTP"))
             msg = sendServiceGateWay.handleClientErrorFlow(message);
+        else
+            msg = sendServiceGateWay.handleApplicationErrorFlow(message);
         return msg;
     }
 
@@ -144,6 +146,18 @@ public class ApplicationConfig {
                 .<Exception>handle((p, h) ->
                         MessageBuilder.withPayload(p.getLocalizedMessage())
                                 .setHeader(HttpHeaders.STATUS_CODE, HttpStatus.NOT_FOUND)
+                                .build())
+                .log()
+                .get();
+    }
+
+    @Bean
+    public IntegrationFlow handleApplicationErrorFlow() {
+        return IntegrationFlows.from("integration.send.error.applicationError.channel")
+                .transform(Throwable::getCause)
+                .<Exception>handle((p, h) ->
+                        MessageBuilder.withPayload(p.getLocalizedMessage())
+                                .setHeader(HttpHeaders.STATUS_CODE, HttpStatus.INTERNAL_SERVER_ERROR)
                                 .build())
                 .log()
                 .get();

@@ -1,3 +1,5 @@
+resource:
+  filepath: in/address.csv
 send:
   httpClient:
     timeout: 5000
@@ -8,8 +10,8 @@ send:
     #Параметры для Яндекс
     host: smtp.yandex.ru
     port: 587
-    username: username
-    password: "*****"
+    username: domovoy175@yandex.ru
+    password: Dochent1670
 
     smtp:
       debug: true
