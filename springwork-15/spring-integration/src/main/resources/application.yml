@@ -10,8 +10,8 @@ send:
     #Параметры для Яндекс
     host: smtp.yandex.ru
     port: 587
-    username: domovoy175@yandex.ru
-    password: Dochent1670
+    username: username
+    password: "*****""
 
     smtp:
       debug: true
