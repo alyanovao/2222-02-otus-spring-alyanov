@@ -11,7 +11,7 @@ send:
     host: smtp.yandex.ru
     port: 587
     username: username
-    password: "*****""
+    password: "*****"
 
     smtp:
       debug: true
