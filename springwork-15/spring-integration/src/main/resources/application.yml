@@ -1,0 +1,14 @@
+send:
+  httpClient:
+    timeout: 5000
+    dadataCleanAddressUri: https://cleaner.dadata.ru/api/v1/clean/address
+    token: efabf40d6aa4c366ab2412a1dbb85438902023f8
+    secret: 7417107077b22c3cfbcc6fa5f07d8bf56c4f8a85
+  mail:
+    host: smtp.gmail.com
+    #smtp.yandex.ru
+    port: 465
+    username: username
+    password: username
+    smtp.auth: true
+    smtp.starttls.enable: true
