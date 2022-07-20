@@ -56,6 +56,18 @@ public class ApplicationConfig {
     @Value("${send.mail.password}")
     private String password;
 
+    @Value("${send.mail.smtp.auth}")
+    private String smtpAuth;
+
+    @Value("${send.mail.smtp.starttls.enable}")
+    private String smtpTls;
+
+    @Value("${send.mail.smtp.debug}")
+    private String smtpDebug;
+
+    @Value("${send.mail.letter.subject}")
+    private String subject;
+
     @Bean("integration.inbound.fileChannel")
     public MessageChannel fileChannel() {
         return new QueueChannel();
@@ -158,19 +170,24 @@ public class ApplicationConfig {
                                 .expectedResponseType(String.class)
                 )
                 .log()
-                .handle("transformService", "toMailSender")
+                .handle("transformService", "toDadataAddressResponse")
+                .log()
+                .handle("mailService", "getMailPayloadToConsumer")
                 .log()
                 .enrichHeaders(Mail.headers()
-                        .subject("Subject")
+                        .subject(subject)
                         .from(username)
                         .toFunction(m -> new String[] {username}))
                 .handle(Mail.outboundAdapter(smtpHost)
                         .port(smtpPort)
                         .protocol("smtp")
                         .credentials(username, password)
-                        .javaMailProperties(p -> p.put("mail.debug", "true")
-                                .put("mail.smtps.auth", "true")
-                                .put("mail.smtp.starttls.enable", "true")))
+                        .javaMailProperties(p -> p.put("mail.debug", smtpDebug)
+                                .put("mail.smtps.auth", smtpAuth)
+                                .put("mail.smtp.starttls.enable", smtpTls)
+                                .put("mail.smtp.ssl.trust", smtpHost)
+                        )
+                )
                 .get();
     }
 }

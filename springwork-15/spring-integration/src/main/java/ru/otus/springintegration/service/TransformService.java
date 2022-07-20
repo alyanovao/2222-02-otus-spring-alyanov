@@ -19,11 +19,9 @@ import java.util.List;
 public class TransformService {
     public Message<String> toDadataAddressRequest(Message messageIn) {
         Gson gson = new GsonBuilder().create();
-        val address = messageIn.getPayload().toString();
-        val response = gson.toJson(Collections.singletonList(address), new TypeToken<ArrayList<String>>() {}.getType());
-        Message<String> messageOut = MessageBuilder.withPayload(response)
-                .build();
-        return messageOut;
+        val addressRaw = messageIn.getPayload().toString();
+        val response = gson.toJson(Collections.singletonList(addressRaw), new TypeToken<ArrayList<String>>() {}.getType());
+        return MessageBuilder.withPayload(response).build();
     }
 
     public Message<DadataResponseDto> toDadataAddressResponse(String messageIn) {
@@ -31,9 +29,5 @@ public class TransformService {
         Type listOfDadataResponseDto = new TypeToken<ArrayList<DadataResponseDto>>() {}.getType();
         List<DadataResponseDto> list = gson.fromJson(messageIn, listOfDadataResponseDto);
         return new GenericMessage<DadataResponseDto>(list.get(0));
-    }
-
-    public String toMailSender(Message<DadataResponseDto> messageIn) {
-        return "Test";
     }
 }

@@ -1,7 +1,7 @@
 POST https://cleaner.dadata.ru/api/v1/clean/address
-//Accept: application/json
-Authorization: Token 6bf4017fcff90bb3cd4c10a91b3186876e282bee
+Accept: application/json
+Authorization: Token efabf40d6aa4c366ab2412a1dbb85438902023f8
 Content-Type: application/json
-X-Secret: fff66a900b3371a82c9c75715417506ab75c7316
+X-Secret: 7417107077b22c3cfbcc6fa5f07d8bf56c4f8a85
 
 ["Красная 10"]
