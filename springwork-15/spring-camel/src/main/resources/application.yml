@@ -1,0 +1,15 @@
+source:
+  path: spring-camel\src\main\resources\in
+send:
+  dadataHost: cleaner.dadata.ru
+  dadataPort: 443
+  dadataAddresUrl: /api/v1/clean/address
+
+mail:
+  host: smtp.yandex.ru
+  port: 587
+  username: username
+  password: "*****"
+camel:
+  springboot:
+    main-run-controller: true
