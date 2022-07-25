@@ -1,0 +1,23 @@
+resource:
+  filepath: in/address.csv
+send:
+  httpClient:
+    timeout: 5000
+    dadataCleanAddressUri: https://cleaner.dadata.ru/api/v1/clean/address
+    token: efabf40d6aa4c366ab2412a1dbb85438902023f8
+    secret: 7417107077b22c3cfbcc6fa5f07d8bf56c4f8a85
+  mail:
+    #Параметры для Яндекс
+    host: smtp.yandex.ru
+    port: 587
+    username: username
+    password: "*****"
+
+    smtp:
+      debug: true
+      auth: true
+      starttls:
+        enable: true
+
+    letter:
+      subject: Company information
