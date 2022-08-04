@@ -1,0 +1,33 @@
+management:
+  endpoints:
+    web:
+      base-path: "/monitor"
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:h2db
+  flyway:
+    locations: db/migration
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+
+info:
+ app:
+   version: @project.version@
+   author: aao
+   description: application with metrics
+
+#Включить метрики, healthchecks и logfile
+logging:
+  file:
+    name: 1.log

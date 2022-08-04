@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>ru.outs</groupId>
+    <groupId>ru.otus</groupId>
     <artifactId>springwork-13</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springwork-13</name>
