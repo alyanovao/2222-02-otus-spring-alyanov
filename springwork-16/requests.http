@@ -16,6 +16,9 @@ GET http://localhost:8080/monitor/env
 ### Миграция
 GET http://localhost:8080/monitor/flyway
 
+### Лог
+GET http://localhost:8080/monitor/logfile
+
 ### Список логгеров
 GET http://localhost:8080/monitor/loggers
 
@@ -34,7 +37,7 @@ Content-Type: application/json
 GET http://localhost:8080/monitor/health
 
 ### Собственный healthcheck
-GET http://localhost:8080/monitor/health/my
+GET http://localhost:8080/monitor/health/customHealthCheck
 
 ### Список метрик
 GET http://localhost:8080/monitor/metrics

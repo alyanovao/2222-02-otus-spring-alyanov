@@ -3,10 +3,22 @@ management:
     web:
       base-path: "/monitor"
       exposure:
-        include: "*"
+        include: "metrics,health,logfile,flyway,info"
+    enabled-by-default: false
   endpoint:
     health:
       show-details: always
+      enabled: true
+    metrics:
+      enabled: true
+    logfile:
+      enabled: true
+    flyway:
+      enabled: true
+    info:
+      enabled: true
+
+  #Для отражения информации блока
   info:
     env:
       enabled: true
