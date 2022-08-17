@@ -1,0 +1,30 @@
+version: '3'
+services:
+ library:
+   image: "alyanovao/library:snapshot"
+   container_name: "library"
+   build:
+     context: .
+     dockerfile: Dockerfile
+   ports:
+     - "8080:8080"
+   environment:
+     - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/db
+     - SPRING_DATASOURCE_USERNAME=postgres
+     - SPRING_DATASOURCE_PASSWORD=postgres
+   networks:
+     - network
+ postgres:
+   image: "postgres:latest"
+   container_name: "postgres"
+   ports:
+     - "5432:5432"
+   environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+     - POSTGRES_DB=db
+   networks:
+     - network
+networks:
+   network:
