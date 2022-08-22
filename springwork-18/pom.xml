@@ -19,6 +19,7 @@
 
     <modules>
         <module>library-service</module>
+        <module>configuration-server</module>
     </modules>
 
 </project>

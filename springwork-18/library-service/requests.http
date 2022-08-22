@@ -1,6 +1,11 @@
 ### "Index page"
 GET http://localhost:8080/monitor
 
+###
+POST http://localhost:8081/monitor/refresh
+
+[]
+
 ### Список бинов, созданных в приложении
 GET http://localhost:8080/monitor/beans
 
