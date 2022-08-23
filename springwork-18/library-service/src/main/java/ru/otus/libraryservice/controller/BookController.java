@@ -1,6 +1,6 @@
 package ru.otus.libraryservice.controller;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.otus.libraryservice.availible.BookCircuitBreakerService;
+import ru.otus.libraryservice.availible.BookSupplierService;
 import ru.otus.libraryservice.exception.BookNotFoundException;
 import ru.otus.libraryservice.model.Book;
 import ru.otus.libraryservice.model.BookDto;
@@ -18,20 +20,38 @@ import ru.otus.libraryservice.service.KindBookService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
+@Slf4j
 @Controller
-@RequiredArgsConstructor
 public class BookController {
+    private final Supplier<List<Book>> decorateBookService;
     private final BookService bookService;
     private final AuthorService authorService;
     private final KindBookService kindBookService;
 
+    public BookController(BookSupplierService decorateBookSupplier,
+                          BookService bookService,
+                          AuthorService authorService,
+                          KindBookService kindBookService) {
+        this.decorateBookService = decorateBookSupplier.getBooksSupplier();
+        this.bookService = bookService;
+        this.authorService = authorService;
+        this.kindBookService = kindBookService;
+    }
+
     @GetMapping("/book")
     public String getBook(Model model) {
-        val books = bookService.findAll();
         List<BookDto> bookDto = new ArrayList<>();
-        for(Book book : books) {
-            bookDto.add(BookDto.toDto(book));
+        List<Book> books = null;
+        try {
+            books = decorateBookService.get();
+            for(Book book : books) {
+                bookDto.add(BookDto.toDto(book));
+            }
+        }
+        catch (Exception e) {
+            log.error("Could not get book");
         }
         model.addAttribute("books", bookDto);
         return "book";

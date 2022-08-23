@@ -1,3 +1,6 @@
+###
+GET http://localhost:8090/api/authors
+
 ### "Index page"
 GET http://localhost:8080/monitor
 

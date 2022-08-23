@@ -9,7 +9,6 @@ import ru.otus.springwork10.exception.BookNotFoundException;
 import ru.otus.springwork10.model.Author;
 import ru.otus.springwork10.service.AuthorService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController

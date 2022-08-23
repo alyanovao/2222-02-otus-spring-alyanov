@@ -1,16 +1,14 @@
-package ru.otus.libraryservice.service;
+package ru.otus.libraryserviceslave.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.libraryservice.model.Author;
-import ru.otus.libraryservice.repository.AuthorDao;
+import ru.otus.libraryserviceslave.model.Author;
+import ru.otus.libraryserviceslave.repository.AuthorDao;
 
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
@@ -24,7 +22,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> findAll() {
-        log.info("Start service");
         return authorDao.findAll();
     }
 

@@ -1,24 +1,44 @@
 package ru.otus.libraryservice.controller;
 
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.otus.libraryservice.availible.AuthorSupplierService;
 import ru.otus.libraryservice.exception.BookNotFoundException;
 import ru.otus.libraryservice.model.Author;
 import ru.otus.libraryservice.service.AuthorService;
 
+import java.util.List;
+import java.util.function.Supplier;
+
+@Slf4j
 @Controller
-@RequiredArgsConstructor
 public class AuthorController {
+
     private final AuthorService authorService;
+
+    private final Supplier<List<Author>> decorateAuthorService;
+
+    public AuthorController(AuthorSupplierService service, AuthorService authorService) {
+        this.decorateAuthorService = service.getAuthorsSupplier();
+        this.authorService = authorService;
+    }
 
     @GetMapping("/author")
     public String getAuthor(Model model) {
-        val authors = authorService.findAll();
+
+        List<Author> authors = null;
+
+        try {
+            authors = decorateAuthorService.get();
+        }
+        catch(Exception e) {
+            log.error("Could not get author");
+        }
+
         model.addAttribute("authors", authors);
         return "author";
     }
