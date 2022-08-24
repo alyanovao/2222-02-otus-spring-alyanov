@@ -1,0 +1,69 @@
+###
+GET http://localhost:8090/api/authors
+
+### "Index page"
+GET http://localhost:8080/monitor
+
+###
+POST http://localhost:8081/monitor/refresh
+
+[]
+
+### Список бинов, созданных в приложении
+GET http://localhost:8080/monitor/beans
+
+### Информация о приложении
+GET http://localhost:8080/monitor/info
+
+### Все @ConfigurationProperties
+GET http://localhost:8080/monitor/configprops
+
+### Все перепенные окружения
+GET http://localhost:8080/monitor/env
+
+### Миграция
+GET http://localhost:8080/monitor/flyway
+
+### Лог
+GET http://localhost:8080/monitor/logfile
+
+### Список логгеров
+GET http://localhost:8080/monitor/loggers
+
+### Конфигурация конкретного логгера
+GET http://localhost:8080/monitor/loggers/org.springframework
+
+### Изменение уровня логгирования в runtime
+POST http://localhost:8080/monitor/loggers/org.springframework
+Content-Type: application/json
+
+{
+  "configuredLevel": "TRACE"
+}
+
+### Healthchecks
+GET http://localhost:8080/monitor/health
+
+### Собственный healthcheck
+GET http://localhost:8080/monitor/health/customHealthCheck
+
+### Список метрик
+GET http://localhost:8080/monitor/metrics
+
+### Состояние подключений к БД
+GET http://localhost:8080/monitor/metrics/hikaricp.connections.usage
+
+### Загрузка CPU приложением
+GET http://localhost:8080/monitor/metrics/process.cpu.usage
+
+### Используемая JVM память
+GET http://localhost:8080/monitor/metrics/jvm.memory.used
+
+### Получение данных о запросах
+# Дополнительно можно настроить SLA, персентили и т.д.
+# причём для отдельных запросов
+GET http://localhost:8080/monitor/metrics/http.server.requests
+
+### А вот все метрики для Promehteus
+GET http://localhost:8080/monitor/prometheus
+
