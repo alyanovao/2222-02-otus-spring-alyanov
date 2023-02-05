@@ -94,7 +94,7 @@ https://github.com/alyanovao/2222-02-otus-spring-alyanov/tree/main/springwork-15
 Используемый стек:<br/>
 Spring Camel, Spring Integration, использована учетная запись к dadata
 
-16 - Использовать метрики, healthchecks и logfile
+16 - Использовать метрики, healthchecks и logfile<br/>
 https://github.com/alyanovao/2222-02-otus-spring-alyanov/tree/main/springwork-16 <br/>
 [Подробное описание](https://github.com/alyanovao/2222-02-otus-spring-alyanov/blob/main/springwork-16/README.md)<br/>
 Используемые технологии:<br/>
@@ -106,7 +106,7 @@ https://github.com/alyanovao/2222-02-otus-spring-alyanov/tree/main/springwork-17
 Используемые технологии:<br/>
 Docker, docker-compose
 
-18 - Обернуть внешние вызовы в Hystrix
+18 - Обернуть внешние вызовы в Hystrix<br/>
 https://github.com/alyanovao/2222-02-otus-spring-alyanov/tree/main/springwork-18 <br/>
 [Подробное описание](https://github.com/alyanovao/2222-02-otus-spring-alyanov/blob/main/springwork-18/README.md)<br/>
 В рамках данной работы решил использовать Resilent4j, так как Hystrix устарел<br/>
